@@ -17,7 +17,7 @@ using std::string;
 #include "Robot.h"
 #include "nuts_bolts.h"
 #include "Pin.h"
-#include "StepperMotor.h"
+#include "AmisStepperMotor.h"
 #include "Gcode.h"
 #include "PublicDataRequest.h"
 #include "RobotPublicAccess.h"
@@ -221,9 +221,9 @@ void Robot::on_config_reload(void *argument)
 
     // TODO: delete or detect old steppermotors
     // Make our 3 StepperMotors
-    this->alpha_stepper_motor  = THEKERNEL->step_ticker->add_stepper_motor( new StepperMotor(alpha_step_pin, alpha_dir_pin, alpha_en_pin) );
-    this->beta_stepper_motor   = THEKERNEL->step_ticker->add_stepper_motor( new StepperMotor(beta_step_pin,  beta_dir_pin,  beta_en_pin ) );
-    this->gamma_stepper_motor  = THEKERNEL->step_ticker->add_stepper_motor( new StepperMotor(gamma_step_pin, gamma_dir_pin, gamma_en_pin) );
+    this->alpha_stepper_motor  = THEKERNEL->step_ticker->add_stepper_motor( new AmisStepperMotor(alpha_step_pin, alpha_dir_pin, alpha_en_pin) );
+    this->beta_stepper_motor   = THEKERNEL->step_ticker->add_stepper_motor( new AmisStepperMotor(beta_step_pin,  beta_dir_pin,  beta_en_pin ) );
+    this->gamma_stepper_motor  = THEKERNEL->step_ticker->add_stepper_motor( new AmisStepperMotor(gamma_step_pin, gamma_dir_pin, gamma_en_pin) );
 
     alpha_stepper_motor->change_steps_per_mm(steps_per_mm[0]);
     beta_stepper_motor->change_steps_per_mm(steps_per_mm[1]);

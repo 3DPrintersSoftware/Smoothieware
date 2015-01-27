@@ -153,7 +153,7 @@ void init() {
     kernel->add_module( new Spindle() );
     #endif
     #ifndef NO_UTILS_PANEL
-    kernel->add_module( new Panel() );
+    //kernel->add_module( new Panel() );
     #endif
     #ifndef NO_TOOLS_TOUCHPROBE
     kernel->add_module( new Touchprobe() );

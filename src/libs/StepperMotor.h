@@ -23,7 +23,7 @@ class StepperMotor {
         void step();
         inline void unstep() { step_pin.set(0); };
 
-        inline void enable(bool state) { en_pin.set(!state); };
+        inline void enable(bool state) { /*en_pin.set(!state);*/ };
 
         bool is_moving() { return moving; }
         void move_finished();
