@@ -7,6 +7,22 @@
 namespace ui
 {
 
+template <typename ContainerType, typename ElementType>
+struct LinkBase
+{
+
+ElementType & operator*() const
+{
+	return &(this->get());
+}
+
+virtual ElementType & get() const = 0;
+virtual ContainerType & group() const = 0;
+virtual size_t index() const = 0;
+
+};
+
+/*
 bool always();
 using Condition = bool(*)(void);
 
@@ -77,7 +93,7 @@ protected:
 	ContainerType* group;
 	size_t index_false;
 	ContainerType* group_false;
-};
+};*/
 
 } // namespace ui
 
