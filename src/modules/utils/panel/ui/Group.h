@@ -16,7 +16,7 @@ namespace ui
 // UNIFY with Layout
 struct Group
 {
-	typedef LinkBase<Group> Link;
+	using Link = LinkBase<Group, CompositeItem>;
 	typedef CompositeItem ElementType;
 
 	template<size_t i>

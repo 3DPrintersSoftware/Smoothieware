@@ -11,15 +11,33 @@ template <typename ContainerType, typename ElementType>
 struct LinkBase
 {
 
+LinkBase(size_t index = 0, ContainerType* group = nullptr)
+:index(index), group(group)
+{}
+
 ElementType & operator*() const
 {
 	return &(this->get());
 }
 
-virtual ElementType & get() const = 0;
-virtual ContainerType & group() const = 0;
-virtual size_t index() const = 0;
+virtual ElementType & get() const
+{
+	return (*group)[index];
+}
 
+virtual ContainerType & group() const
+{
+	return &group;
+}
+
+virtual size_t index() const
+{
+	return index;
+}
+
+private:
+	size_t index;
+	ContainerType* group;
 };
 
 /*

@@ -39,8 +39,6 @@ virtual size_t index() const
 }
 
 private:
-std::array<Target, number_of_conditions> targets;
-
 Target const & _get() const
 {
 	for(auto& target: targets)
@@ -52,6 +50,8 @@ Target const & _get() const
 	}
 	return targets.back();
 }
+
+std::array<Target, number_of_conditions> targets;
 
 };
 
