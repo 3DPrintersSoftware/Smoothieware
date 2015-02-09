@@ -110,7 +110,7 @@ void init() {
     kernel->streams->printf("  Build version %s, Build date %s\r\n", version.get_build(), version.get_build_date());
 
     //some boards don't have leds.. TOO BAD!
-    kernel->use_leds= !kernel->config->value( disable_leds_checksum )->by_default(false)->as_bool();
+    kernel->use_leds= !kernel->config->value( disable_leds_checksum )->by_default(true)->as_bool();
 
     bool sdok= (sd.disk_initialize() == 0);
     if(!sdok) kernel->streams->printf("SDCard is disabled\r\n");
