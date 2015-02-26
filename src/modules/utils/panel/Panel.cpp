@@ -39,8 +39,8 @@
 #include <type_traits>
 
 #define LOCATION __attribute__ ((section ("AHBSRAM0")))
-#define hotend_temp_checksum 	 CHECKSUM("hotend_temperature")
-#define bed_temp_checksum    	 CHECKSUM("bed_temperature")
+#define hotend_temp_checksum     CHECKSUM("hotend_temperature")
+#define bed_temp_checksum        CHECKSUM("bed_temperature")
 #define hotend_temp_ABS_checksum CHECKSUM("hotend_temperature_ABS")
 #define bed_temp_ABS_checksum    CHECKSUM("bed_temperature_ABS")
 #define hotend_temp_PLA_checksum CHECKSUM("hotend_temperature_PLA")
@@ -67,7 +67,7 @@ namespace info
 			default_bed_temperature_PLA    = kernel->config->value( panel_checksum, bed_temp_PLA_checksum    )->by_default(60.0f  )->as_number();
 			default_hotend_temperature_ABS = kernel->config->value( panel_checksum, hotend_temp_ABS_checksum )->by_default(235.0f )->as_number();
 			default_bed_temperature_ABS    = kernel->config->value( panel_checksum, bed_temp_ABS_checksum    )->by_default(100.0f  )->as_number();
-			x_max = kernel->config->value(alpha_max_checksum)->by_default(250.0f)->as_number();								
+			x_max = kernel->config->value(alpha_max_checksum)->by_default(250.0f)->as_number();                             
 			y_max = kernel->config->value(beta_max_checksum)->by_default(250.0f)->as_number();
 		}
 
@@ -90,22 +90,22 @@ void enque()
 
 std::string get_network()
 {
-    void *returned_data;
-    if(PublicData::get_value( network_checksum, get_ip_checksum, &returned_data ))
-    {
-        uint8_t *ipaddr = (uint8_t *)returned_data;
-        char buf[20];
-        int n = snprintf(buf, sizeof(buf), "%d.%d.%d.%d", ipaddr[0], ipaddr[1], ipaddr[2], ipaddr[3]);
-        buf[n] = 0;
-        return std::string(buf);
-    }
-    return "No network";
+	void *returned_data;
+	if(PublicData::get_value( network_checksum, get_ip_checksum, &returned_data ))
+	{
+		uint8_t *ipaddr = (uint8_t *)returned_data;
+		char buf[20];
+		int n = snprintf(buf, sizeof(buf), "%d.%d.%d.%d", ipaddr[0], ipaddr[1], ipaddr[2], ipaddr[3]);
+		buf[n] = 0;
+		return std::string(buf);
+	}
+	return "No network";
 }
 
 void send_gcode(std::string g)
 {
-    Gcode gcode(g, &(StreamOutput::NullStream));
-    THEKERNEL->call_event(ON_GCODE_RECEIVED, &gcode);
+	Gcode gcode(g, &(StreamOutput::NullStream));
+	THEKERNEL->call_event(ON_GCODE_RECEIVED, &gcode);
 }
 
 template <size_t i>
@@ -113,12 +113,12 @@ float get_current_pos_()
 {
 	void *returned_data;
 
-    bool ok = PublicData::get_value( robot_checksum, current_position_checksum, &returned_data );
-    if(ok)
-    {
-    	float *p = static_cast<float *>(returned_data);
+	bool ok = PublicData::get_value( robot_checksum, current_position_checksum, &returned_data );
+	if(ok)
+	{
+		float *p = static_cast<float *>(returned_data);
 		return p[i];
-	}	
+	}   
 	else
 	{
 		return 0;
@@ -223,16 +223,16 @@ void abort_playing_file()
 
 std::tuple<uint32_t, std::string> get_progress()
 {
-    void *returned_data;
-    if (PublicData::get_value( player_checksum, get_progress_checksum, &returned_data ))
-    {
-    	pad_progress p =  *static_cast<struct pad_progress *>(returned_data);
-    	size_t name_start = p.filename.find_last_of("/") + 1;
-    	size_t name_end   = p.filename.find_last_of(".");
-        return(std::make_tuple(p.percent_complete, p.filename.substr(name_start, name_end-name_start) ));
-    } else {
+	void *returned_data;
+	if (PublicData::get_value( player_checksum, get_progress_checksum, &returned_data ))
+	{
+		pad_progress p =  *static_cast<struct pad_progress *>(returned_data);
+		size_t name_start = p.filename.find_last_of("/") + 1;
+		size_t name_end   = p.filename.find_last_of(".");
+		return(std::make_tuple(p.percent_complete, p.filename.substr(name_start, name_end-name_start) ));
+	} else {
 		return(std::make_tuple(0, i18n::no_file_caption));
-    }
+	}
 }
 
 uint32_t estimate_remaining(uint32_t seconds_elapsed, uint32_t percent_complete)
@@ -249,14 +249,14 @@ uint32_t estimate_remaining(uint32_t seconds_elapsed, uint32_t percent_complete)
 
 std::tuple<uint32_t, uint32_t> get_time_progress()
 {
-    void *returned_data;
-    if (PublicData::get_value( player_checksum, get_progress_checksum, &returned_data )) 
-    {
-    	pad_progress p =  *static_cast<struct pad_progress *>(returned_data);
-        return(std::make_tuple(p.elapsed_secs, estimate_remaining(p.elapsed_secs, p.percent_complete) ));
-    } else {
+	void *returned_data;
+	if (PublicData::get_value( player_checksum, get_progress_checksum, &returned_data )) 
+	{
+		pad_progress p =  *static_cast<struct pad_progress *>(returned_data);
+		return(std::make_tuple(p.elapsed_secs, estimate_remaining(p.elapsed_secs, p.percent_complete) ));
+	} else {
 		return(std::make_tuple(0, 0));
-    }
+	}
 }
 
 ui::GlobalCell const scroll_bar_cells[] = 
@@ -309,7 +309,7 @@ ui::Cell const splash_text_cell[] =
 
 // ui::Cell const splash_info_cell[] = 
 // {
-// 	ui::Cell({/*x*/ 0,  /*y*/   0, /*w*/ 128, h 64}, ui::DefaultMultilineRenderPolicy(), ui::ActiveMultilineRenderPolicy())
+//  ui::Cell({/*x*/ 0,  /*y*/   0, /*w*/ 128, h 64}, ui::DefaultMultilineRenderPolicy(), ui::ActiveMultilineRenderPolicy())
 // };
 
 ui::Layout default_layout(main_menu_cells);
@@ -408,23 +408,23 @@ enum class OptionsMenu : size_t
 
 float get_velocity()
 {
-    void *returned_data;
-    if (PublicData::get_value( robot_checksum, speed_override_percent_checksum, &returned_data )) 
-    {
-        float v = *static_cast<float *>(returned_data);
-        return v;
-    }
-    else
-    {
-        return 0.0;
-    }
+	void *returned_data;
+	if (PublicData::get_value( robot_checksum, speed_override_percent_checksum, &returned_data )) 
+	{
+		float v = *static_cast<float *>(returned_data);
+		return v;
+	}
+	else
+	{
+		return 0.0;
+	}
 }
 
 void set_velocity(float v)
 {
-    char buffer[11];
-    snprintf(buffer, sizeof(buffer), "M220 S%4.0f", v);
-    command_buffer.push(std::bind(send_gcode, std::string(buffer)));
+	char buffer[11];
+	snprintf(buffer, sizeof(buffer), "M220 S%4.0f", v);
+	command_buffer.push(std::bind(send_gcode, std::string(buffer)));
 }
 
 CompositeItem LOCATION logo_menu_items[] = 
@@ -440,8 +440,49 @@ CompositeItem LOCATION status_menu_items[] =
 	ui::FloatFloatInfo(i18n::hotbed_temperature_caption, get_hotbed_temperature),
 };
 
+void turn_motors_off()
+{
+	send_gcode("M18");
+}
+
+void turn_motors_on()
+{
+	send_gcode("M17");
+}
+
+void turn_leds_off()
+{
+	send_gcode("M153");
+}
+
+void turn_leds_on()
+{
+	send_gcode("M152");
+}
+
+void turn_extruder_fans_off()
+{
+	send_gcode("M107");
+}
+
+void turn_extruder_fans_on()
+{
+	send_gcode("M106");
+}
+
+void turn_enclosure_fans_off()
+{
+	send_gcode("M151");
+}
+
+void turn_enclosure_fans_on()
+{
+	send_gcode("M150");
+}
+
 void preheat_abs()
 {
+	enque<turn_enclosure_fans_off>();
 	set_hotend_temperature(info::settings.default_hotend_temperature_ABS); 
 	set_hotbed_temperature(info::settings.default_bed_temperature_ABS);
 }
@@ -589,7 +630,7 @@ CompositeItem LOCATION maintenance_menu_items[] =
 	ui::Item(i18n::motors_caption),
 	ui::Item(i18n::leds_caption),
 	ui::Item(i18n::fans_caption),
-//	ui::Item(i18n::filament_change_caption),
+//  ui::Item(i18n::filament_change_caption),
 	ui::Item(i18n::level_bed_caption)
 };
 
@@ -618,7 +659,7 @@ CompositeItem LOCATION extrude_menu_items[] =
 CompositeItem LOCATION options_menu_items[] = 
 {
 	ui::Item(i18n::back_caption),
-    ui::VelocityControl(i18n::velocity_caption, get_velocity, set_velocity),
+	ui::VelocityControl(i18n::velocity_caption, get_velocity, set_velocity),
 	ui::CharInfo(i18n::ip_caption, get_network),
 	ui::CharInfo(i18n::version_caption, info::get_version)
 };
@@ -628,46 +669,6 @@ CompositeItem LOCATION init_menu_items[] =
 	ui::Command(i18n::init_home, enque<home_xyz>),
 	ui::Item(i18n::dont_home),
 };
-
-void turn_motors_off()
-{
-	send_gcode("M18");
-}
-
-void turn_motors_on()
-{
-	send_gcode("M17");
-}
-
-void turn_leds_off()
-{
-	send_gcode("M153");
-}
-
-void turn_leds_on()
-{
-	send_gcode("M152");
-}
-
-void turn_extruder_fans_off()
-{
-	send_gcode("M107");
-}
-
-void turn_extruder_fans_on()
-{
-	send_gcode("M106");
-}
-
-void turn_enclosure_fans_off()
-{
-	send_gcode("M151");
-}
-
-void turn_enclosure_fans_on()
-{
-	send_gcode("M150");
-}
 
 CompositeItem LOCATION motors_menu_items[] = 
 {
@@ -853,11 +854,11 @@ Panel::Panel()
 void Panel::on_module_loaded()
 {
 	this->register_for_event(ON_IDLE);
-    this->register_for_event(ON_MAIN_LOOP);
-    this->register_for_event(ON_SECOND_TICK);
+	this->register_for_event(ON_MAIN_LOOP);
+	this->register_for_event(ON_SECOND_TICK);
 
-    THEKERNEL->slow_ticker->attach( 23U,  this,  &Panel::button_tick );
-    THEKERNEL->slow_ticker->attach( 50,   this,  &Panel::refresh_tick );
+	THEKERNEL->slow_ticker->attach( 23U,  this,  &Panel::button_tick );
+	THEKERNEL->slow_ticker->attach( 50,   this,  &Panel::refresh_tick );
 }
 
 uint32_t Panel::button_tick(uint32_t dummy)
@@ -949,9 +950,9 @@ void Panel::on_idle(void* argument)
 }
 
 	//min_extrusion_temperature = THEKERNEL->config->value(extruder_checksum, this->identifier, min_temp_checksum )->by_default(170)->as_number(); // REMOVE REDUNTANT DATA IN THE FUTURE
-    //max_temperature = THEKERNEL->config->value(extruder_checksum, this->identifier, max_temp_checksum )->by_default(300)->as_number(); // REMOVE REDUNTANT DATA IN THE FUTURE
- //    default_hotend_temperature 	   = THEKERNEL->config->value( panel_checksum, hotend_temp_checksum )->by_default(185.0f )->as_number();
- //    default_bed_temperature    	   = THEKERNEL->config->value( panel_checksum, bed_temp_checksum    )->by_default(60.0f  )->as_number();
+	//max_temperature = THEKERNEL->config->value(extruder_checksum, this->identifier, max_temp_checksum )->by_default(300)->as_number(); // REMOVE REDUNTANT DATA IN THE FUTURE
+ //    default_hotend_temperature      = THEKERNEL->config->value( panel_checksum, hotend_temp_checksum )->by_default(185.0f )->as_number();
+ //    default_bed_temperature         = THEKERNEL->config->value( panel_checksum, bed_temp_checksum    )->by_default(60.0f  )->as_number();
 	// default_hotend_temperature_ABS = THEKERNEL->config->value( panel_checksum, hotend_temp_ABS_checksum )->by_default(235.0f )->as_number();
  //    default_bed_temperature_ABS    = THEKERNEL->config->value( panel_checksum, bed_temp_ABS_checksum    )->by_default(100.0f  )->as_number();
 	// default_hotend_temperature_PLA = THEKERNEL->config->value( panel_checksum, hotend_temp_PLA_checksum )->by_default(185.0f )->as_number();
