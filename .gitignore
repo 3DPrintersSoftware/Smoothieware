@@ -22,3 +22,5 @@ debug
 /win_install.log
 /linux_install.log
 
+*.tags_sorted_by_file
+.tags
